@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Step 0: Visualise data
+# TODO maybe let's plot some of the data first? let's see what we're dealing with
+
+
 # 1. Run Separation (separating orbital DOS for each molecule)
 echo "Running run_separation.sh  ..."
 ./run_separation.sh
