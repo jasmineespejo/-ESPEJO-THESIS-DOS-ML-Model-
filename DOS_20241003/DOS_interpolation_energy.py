@@ -2,7 +2,6 @@ import numpy as np
 import os
 
 from obtain_energy_range import find_common_energy_range
-from merging_PEDOS import write_output
 from scipy.interpolate import interp1d
 
 def load_energy_data(filepath):
