@@ -3,7 +3,8 @@
 # Path to the directory containing DOS calculation folders
 # DOS_Folders_PATH="//scratch/qq31/rk2062/Additives_properties_proj/DOS_auto_calculations/"  # Replace with actual path
 
-DOS_Folders_PATH = "C:/Users/jespe/Desktop/[THESIS] Code/-ESPEJO-THESIS-DOS-ML-Model-/DOS_20241003"
+#DOS_Folders_PATH = "C:/Users/jespe/Desktop/[THESIS] Code/-ESPEJO-THESIS-DOS-ML-Model-/DOS_20241003"
+DOS_Folders_PATH = "$(pwd)"
 
 # Loop through all folders in the specified directory
 for folder_path in "$DOS_Folders_PATH"*/; do
