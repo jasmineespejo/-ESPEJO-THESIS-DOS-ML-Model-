@@ -1,5 +1,7 @@
+import sys, os
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -24,19 +26,41 @@ def load_interpolated_dos(filepath):
     except Exception as e:
         print(f"Error reading {filepath}: {e}")
 
-def perform_PCA(molecule_names, dos_data):
+def perform_PCA(dos_data):
+
+    base_dir=os.path.join(os.getcwd(), 'DOSCAR_files')
 
     # Standardise/scale data
     scaler = StandardScaler()
     scaled_data = scaler.fit_transform(dos_data)
 
     # Apply PCA
-    k = 1 # TODO Replace 'k' with the number of components you want to retain
-    pca = PCA(n_components=k)
+    n_samples = scaled_data.shape[0] - 1
+    pca = PCA(n_components=n_samples)
     principal_components = pca.fit_transform(scaled_data)
-    
-    return None
+
+    filepath = os.path.join(base_dir,'pca_data.txt')
+
+    np.savetxt(filepath, principal_components, delimiter=',', header='PC1,PC2', comments='')
+    print(f"File saved at: {filepath}")
+
+    # Inspect the explained variance
+    explained_variance = pca.explained_variance_ratio_
+    print(f"The explained variance is {explained_variance}")
+
+    return pca, scaled_data
 
 if __name__ == "__main__":
-    base_dir = "./" # TODO: Update this to base directory
-    
+    # Check if the the directory path argument is provided
+    if len(sys.argv) < 2:
+        print("Usage: MAIN_DIR argument not provided")
+        sys.exit(1)
+
+    # Get the base directory path from the first command-line argument
+    base_dir = sys.argv[1]
+    interpolated_filepath = os.path.join(base_dir,'interpolated_dos.txt')
+
+    molecule_names, dos_data = load_interpolated_dos(base_dir)
+
+    perform_PCA(dos_data)
+

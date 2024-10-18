@@ -29,3 +29,16 @@ else
     echo "Error occurred while running DOS_interpolation_energy.py."
     exit 1
 fi
+
+: << 'END_COMMENT'
+# 3. Perform PCA
+# i.e. run PCA_preliminary.py
+
+echo "Running PCA_preliminary.py..."
+python PCA_preliminary.py "$DOSCAR_FILES_DIR"
+if [ $? -eq 0 ]; then
+    echo "PCA_preliminary.py ran successfully."
+else
+    echo "Error occurred while running PCA_preliminary.py."
+    exit 1
+fi
