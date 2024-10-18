@@ -1,0 +1,3 @@
+# need to install numpy
+
+# need to install scipy
