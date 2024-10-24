@@ -2,7 +2,7 @@ import numpy as np
 import os
 import sys
 
-from obtain_energy_range import find_common_energy_range
+from DOS_Scripts.pca_obtain_energy_range import find_common_energy_range
 from scipy.interpolate import interp1d
 
 def load_energy_data(filepath):

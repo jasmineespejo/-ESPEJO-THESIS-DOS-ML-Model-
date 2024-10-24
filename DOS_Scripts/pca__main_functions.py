@@ -28,14 +28,17 @@ def load_interpolated_dos(filepath):
 
 def perform_PCA(dos_data):
 
+    header_features = dos_data[0,:]
+    sample_data = dos_data[1:,:]
+
     base_dir=os.path.join(os.getcwd(), 'DOSCAR_files')
 
     # Standardise/scale data
     scaler = StandardScaler()
-    scaled_data = scaler.fit_transform(dos_data)
+    scaled_data = scaler.fit_transform(sample_data)
 
     # Apply PCA
-    n_samples = scaled_data.shape[0] - 1
+    n_samples = scaled_data.shape[0]
     pca = PCA(n_components=n_samples)
     principal_components = pca.fit_transform(scaled_data)
 
