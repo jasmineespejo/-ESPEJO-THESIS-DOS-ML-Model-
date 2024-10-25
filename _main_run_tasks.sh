@@ -4,7 +4,7 @@
 # TODO maybe let's plot some of the data first? let's see what we're dealing with
 
 # Define the main directory containing all DOS folders
-DOSCAR_FILES_DIR="$(cygpath -w "$(pwd)/DOSCAR_files")" # TODO UPDATE WHEN NECESSARY
+DOSCAR_FILES_DIR="$(cygpath -w "$(dirname "$(pwd)")/DOSCAR_files")"
 
 # 1. Run Separation (separating orbital DOS for each molecule)
 chmod +x sp__run.sh
@@ -16,7 +16,6 @@ else
     echo "Error occurred while running sp__run.sh."
     exit 1
 fi
-
 
 # 2. Interpolate DOS to common energy grid
 # i.e. run DOS_interpolation_energy.py
