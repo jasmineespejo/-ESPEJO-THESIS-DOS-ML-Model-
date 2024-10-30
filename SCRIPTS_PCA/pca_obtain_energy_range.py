@@ -29,8 +29,8 @@ def find_common_energy_range(base_dir):
     Assumes each molecule has a directory in 'base_dir' with a file 'all_orbitals_total.txt'.
     """
 
-    min_energy_global = float('inf')
-    max_energy_global = float('-inf')
+    min_energy_global = None
+    max_energy_global = None
 
     # Iterate over all molecule directories
     for mol_dir in os.listdir(base_dir):
@@ -39,10 +39,14 @@ def find_common_energy_range(base_dir):
         if os.path.exists(mol_path):
             min_energy, max_energy = get_energy_range(mol_path)
 
+            if min_energy_global is None and max_energy_global is None:
+                min_energy_global = min_energy
+                max_energy_global = max_energy
+
             if min_energy is not None and max_energy is not None:
                 # Update global min and max energy levels
-                min_energy_global = min(min_energy_global, min_energy)
-                max_energy_global = max(max_energy_global, max_energy)
+                min_energy_global = max(min_energy_global, min_energy)
+                max_energy_global = min(max_energy_global, max_energy)
         
                 print(f"Energy range update for molecule {mol_dir}.")
         
