@@ -48,7 +48,7 @@ def find_common_energy_range(base_dir):
                 min_energy_global = max(min_energy_global, min_energy)
                 max_energy_global = min(max_energy_global, max_energy)
         
-                print(f"Energy range update for molecule {mol_dir}.")
+                # print(f"Energy range update for molecule {mol_dir}.")
         
         """ 
         else:

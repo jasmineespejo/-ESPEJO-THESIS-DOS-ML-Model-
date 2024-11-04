@@ -55,9 +55,10 @@ def interpolate_all(base_dir, energy_grid):
                 print(f"No valid energy data found for molecule {mol_dir}.")
         
             # print(f"File not found for molecule {mol_dir}: {mol_path}")
-    
-    # Save interpolated data dictionary to a text file
+
     output_filepath = os.path.join(base_dir, 'interpolated_dos.txt') # Output file
+
+    # Save interpolated data dictionary to a text file
     with open(output_filepath, 'w') as f:
         # Write header (energy grid values as columns)
         f.write('Molecule\t'+ '\t'.join(map(str, energy_grid)) + '\n') 
@@ -68,6 +69,16 @@ def interpolate_all(base_dir, energy_grid):
 
     print(f"Interpolated DOS data saved to {output_filepath}")
 
+def perform_interpolation(base_dir, min_energy_global, max_energy_global):
+    # Find the common energy range across all molecules
+    # 
+
+    common_energy_grid = np.linspace(min_energy_global, max_energy_global, num=1000)
+    # Call the interpolation function
+    interpolate_all(base_dir, common_energy_grid)
+
+
+"""
 if __name__ == "__main__":
     # Check if the the directory path argument is provided
     if len(sys.argv) < 2:
@@ -80,7 +91,13 @@ if __name__ == "__main__":
     # Find the common energy range across all molecules
     min_energy_global, max_energy_global = find_common_energy_range(base_dir)
 
+    if len(sys.argv) == 4:
+        min_energy_global = sys.argv[2]
+        max_energy_global = sys.argv[3]
+
     common_energy_grid = np.linspace(min_energy_global, max_energy_global, num=1000)
 
     # Call the interpolation function
     interpolate_all(base_dir, common_energy_grid)
+
+"""
