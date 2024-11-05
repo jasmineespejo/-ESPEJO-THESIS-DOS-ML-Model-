@@ -13,15 +13,21 @@ for folder_path in "$MAIN_DIR"/*/; do
     folder_name=$(basename "$folder_path")
     
     # Find any file that starts with 'FILE_DOSCAR'
-    doscar_file=$(find "$folder_path" -maxdepth 1 -type f -name 'DOSCAR*')
-
+    doscar_file=$(find "$folder_path" -maxdepth 1 -type f -name '*DOSCAR*')
+    echo "Current doscar_file: $doscar_file"
     # Check if DOSCAR file exists
     if [ -f "$doscar_file" ]; then
         # Read the 6th line from the DOSCAR file
         dos_data_start=$(sed -n '6p' "$doscar_file")
         
         # Create a Separate_files directory in the current folder
-        output_directory="$folder_path/Separate_files"
+        output_directory="$folder_path/Separate_files"  
+            # Check if the Separate_files directory already exists
+        if [ -d "$output_directory" ]; then
+            echo "Skipping $folder_name as Separate_files directory already exists."
+            continue
+        fi
+        
         mkdir -p "$output_directory"
         
         # Initialize variables
@@ -30,6 +36,7 @@ for folder_path in "$MAIN_DIR"/*/; do
         
         # Read the DOSCAR file line by line
         while IFS= read -r line; do
+            
             # Check if the line matches the 6th line (start of atom DOS data)
             if [[ "$line" == "$dos_data_start" ]]; then
                 # If a section has been collected, save it to a new file
@@ -58,6 +65,7 @@ for folder_path in "$MAIN_DIR"/*/; do
             fi
         fi
         
+        echo "Separation status: $separation_completed"
         echo "DOS data separated for $folder_name and saved in $output_directory (skipping first 2 files)"
     else
         echo "DOSCAR file not found in $folder_name"

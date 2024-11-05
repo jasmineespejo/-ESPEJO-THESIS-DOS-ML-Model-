@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Print the current working directory
-# echo "Current Directory: $(pwd)"
-
 # Define the main directory containing all DOS folders
-DOSCAR_FILES_DIR="$(cygpath -w "$(pwd)/DOSCAR_files")" # TODO UPDATE WHEN NECESSARY
+# DOSCAR_FILES_DIR="$(cygpath -w "$(pwd)/DOSCAR_files")" # TODO UPDATE WHEN NECESSARY
+DOSCAR_FILES_DIR="$(cygpath -w "$(dirname "$(pwd)")/DOSCAR_files")"
+
+echo "The current directory is $DOSCAR_FILES_DIR"
 
 # 1. Change file permissions (for bash files in this case)
 # echo "Changing file permissions..."
