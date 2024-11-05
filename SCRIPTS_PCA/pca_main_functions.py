@@ -44,7 +44,7 @@ def perform_PCA(sample_data):
 
     # Save scaled data (create the file if it doesn't exist)
     filepath = os.path.join(os.getcwd(),'scaled_data.txt')
-    np.savetxt(filepath, scaled_data)
+    # np.savetxt(filepath, scaled_data)
 
     # Apply PCA
     n_samples = scaled_data.shape[0]
@@ -53,9 +53,7 @@ def perform_PCA(sample_data):
 
     # Save PCA results (create the file if it doesn't exist)
     filepath = os.path.join(os.getcwd(),'pca_data.txt')
-    np.savetxt(filepath, principal_components)
-    
-    print(f"PCA results saved at: {filepath}")
+    # np.savetxt(filepath, principal_components)
 
     return pca, scaled_data
 
@@ -75,10 +73,16 @@ def transform_data_to_pc(molecule_names, scaled_data, min_energy, max_energy, cu
     pc_df.insert(0, 'Molecule', molecule_names)
 
     # Generate the filename
-    filename = f'transformed_data_[{min_energy},{max_energy}]_var{cum_variance:.2f}.txt'
+    filename = f'transformed_data_[{min_energy:.2f},{max_energy:.2f}]_var{cum_variance:.2f}.txt'
+
+    transformed_data_dir = os.path.join(os.getcwd(),'transformed_data')
+
+    # Create the directory if it doesn't exist
+    if not os.path.exists(transformed_data_dir):
+        os.makedirs(transformed_data_dir)  # Creates all intermediate directories if needed
 
     # Save the DataFrame to a text file
-    pc_df.to_csv(filename, sep='\t', index=False)
+    pc_df.to_csv(os.path.join(transformed_data_dir, filename), sep='\t', index=False)
 
 if __name__ == "__main__":
     # Check if the the directory path argument is provided
