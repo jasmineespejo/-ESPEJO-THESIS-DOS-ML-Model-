@@ -57,7 +57,7 @@ def perform_PCA(sample_data):
 
     return pca, scaled_data
 
-def transform_data_to_pc(molecule_names, scaled_data, min_energy, max_energy, cum_variance, n_pc):
+def transform_data_to_pc(dataset, molecule_names, scaled_data, min_energy, max_energy, cum_variance, n_pc):
 
     pca = PCA(n_components=n_pc)
     transformed_data = pca.fit_transform(scaled_data)
@@ -75,7 +75,7 @@ def transform_data_to_pc(molecule_names, scaled_data, min_energy, max_energy, cu
     # Generate the filename
     filename = f'transformed_data_[{min_energy:.2f},{max_energy:.2f}]_var{cum_variance:.2f}.txt'
 
-    transformed_data_dir = os.path.join(os.getcwd(),'transformed_data')
+    transformed_data_dir = os.path.join(os.getcwd(),f'transformed_data_{dataset}')
 
     # Create the directory if it doesn't exist
     if not os.path.exists(transformed_data_dir):

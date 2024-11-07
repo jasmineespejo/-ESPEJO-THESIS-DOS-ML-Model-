@@ -1,8 +1,9 @@
 import pandas as pd
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 def load_pca_transformed_data(filepath):
 
@@ -47,9 +48,17 @@ def perform_random_forest(merged_data_df):
     y_pred = rf_model.predict(x_test)
 
     # Evaluation
+
+    mae = mean_absolute_error(y_test, y_pred)
     mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
     r2 = r2_score(y_test, y_pred)
 
+    # Number of samples and predictors
+    n = len(y_test)  # number of data points
+    p = x_train.shape[1]  # number of predictors (features)
 
+    # Calculate Adjusted R-squared
+    adjusted_r2 = 1 - ((1 - r2) * (n - 1)) / (n - p - 1)
 
-    return mse, r2
+    return mae, mse, rmse, r2, adjusted_r2
