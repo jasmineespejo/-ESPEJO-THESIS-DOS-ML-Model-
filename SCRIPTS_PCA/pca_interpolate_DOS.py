@@ -67,7 +67,7 @@ def interpolate_all(base_dir, energy_grid):
         for molecule, dos in all_interpolated_dos.items():
             f.write(f"{molecule}\t" + '\t'.join(map(str, dos)) + '\n')
 
-    print(f"Interpolated DOS data saved to {output_filepath}")
+    # print(f"Interpolated DOS data saved to {output_filepath}")
 
 def perform_interpolation(base_dir, min_energy_global, max_energy_global):
     # Find the common energy range across all molecules
