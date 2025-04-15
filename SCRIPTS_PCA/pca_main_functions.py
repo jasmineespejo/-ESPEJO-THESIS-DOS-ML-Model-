@@ -84,11 +84,11 @@ def transform_data_to_pc(results_dir, dataset, molecule_names, scaled_data, min_
     # Save the DataFrame to a text file
     pc_df.to_csv(os.path.join(transformed_data_dir, filename), sep='\t', index=False)
 
+    # Save to Excel (append if file already exists)
     # Sheet name is based on energy range and variance for variation tracking
     sheet_name = f'{min_energy:.2f},{max_energy:.2f}_var{cum_variance:.2f}'
 
     excel_name = os.path.join(results_dir, f'{dataset}_transformed_data.xlsx')
-    # Save to Excel (append if file already exists)
     if os.path.exists(excel_name):
         # If Excel file does not exists, create a new Excel file
         with pd.ExcelWriter(excel_name, mode="a", engine="openpyxl", if_sheet_exists="replace") as writer:

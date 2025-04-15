@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Note: Before running this file, ensure permissions are adjusted
+# chmod +x sp__run.sh
+
 # Define the main directory containing all DOS folders
-# DOSCAR_FILES_DIR="$(cygpath -w "$(pwd)/DOSCAR_files")" # TODO UPDATE WHEN NECESSARY
 DOSCAR_FILES_DIR="$(cygpath -w "$(dirname "$(pwd)")/DOSCAR_files")"
 
 echo "The current directory is $DOSCAR_FILES_DIR"

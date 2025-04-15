@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import sys
+import pandas as pd
 
 from pca_obtain_energy_range import find_common_energy_range
 from scipy.interpolate import interp1d
@@ -31,10 +32,12 @@ def interpolate_single(energy_grid, energy, orbital_dos):
     interpolated_dos = interp_func(energy_grid)
     return interpolated_dos
 
-def interpolate_all(base_dir, energy_grid):
+def interpolate_all(base_dir, min_energy, max_energy):
     """
     Performs DOS interpolation across all molecules in the given base directory.
     """
+
+    energy_grid = np.linspace(min_energy, max_energy, num=1000)
 
     all_interpolated_dos = {}
     
@@ -56,7 +59,7 @@ def interpolate_all(base_dir, energy_grid):
         
             # print(f"File not found for molecule {mol_dir}: {mol_path}")
 
-    output_filepath = os.path.join(base_dir, 'interpolated_dos.txt') # Output file
+    output_filepath = os.path.join(base_dir, f'interpolated_dos_[{min_energy:.2f},{max_energy:.2f}].txt') # Output file
 
     # Save interpolated data dictionary to a text file
     with open(output_filepath, 'w') as f:
@@ -69,14 +72,20 @@ def interpolate_all(base_dir, energy_grid):
 
     # print(f"Interpolated DOS data saved to {output_filepath}")
 
-def perform_interpolation(base_dir, min_energy_global, max_energy_global):
-    # Find the common energy range across all molecules
-    # 
+    dos_df = pd.DataFrame(all_interpolated_dos)
 
-    common_energy_grid = np.linspace(min_energy_global, max_energy_global, num=1000)
-    # Call the interpolation function
-    interpolate_all(base_dir, common_energy_grid)
+    # Save to Excel (append if file already exists)
+    # Sheet name is based on energy range and variance for variation tracking
+    sheet_name = f'{min_energy:.2f},{max_energy:.2f}'
 
+    excel_name = os.path.join(base_dir, f'interpolated_DOS.xlsx')
+    if os.path.exists(excel_name):
+        # If Excel file does not exists, create a new Excel file
+        with pd.ExcelWriter(excel_name, mode="a", engine="openpyxl", if_sheet_exists="replace") as writer:
+            dos_df.to_excel(writer, sheet_name=sheet_name, index=False) 
+    else:
+        with pd.ExcelWriter(excel_name) as writer:
+            dos_df.to_excel(writer, sheet_name=sheet_name, index=False) 
 
 """
 if __name__ == "__main__":
