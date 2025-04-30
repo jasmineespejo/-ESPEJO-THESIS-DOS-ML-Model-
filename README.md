@@ -57,15 +57,15 @@ Parse raw DOSCAR files into a sizable matrix for PCA-reduction
 
 2. PCA Analysis
 Perform PCA on DOS features to reduce dimensionality.
-> Workflow laid out in jupiter notebook 'SCRIPTS_PCA/x_PCA_perform multiple.ipynb'
+> Workflow set out in jupiter notebook 'SCRIPTS_PCA/x_PCA_perform multiple.ipynb'
 
 3. Random Forest Modelling
 Train and evaluate a Random Forest regressor on PCA-features DOS data.
-> Workflow laiD+d out in jupiter notebook 'SCRIPTS_RANDOM_FOREST/x_RANDOM_FOREST.ipynb'
+> Workflow set out in jupiter notebook 'SCRIPTS_RANDOM_FOREST/x_RANDOM_FOREST.ipynb'
 
 4. XGBoost Modelling
 Train and evaluate an XGBoost regressor as an alternative.
-> Workflow laiD out in jupiter notebook 'SCRIPTS_XGBOOST/x_XGBOOST.ipynb'
+> Workflow set out in jupiter notebook 'SCRIPTS_XGBOOST/x_XGBOOST.ipynb'
 
 ## Acknowledgements
 Raw DOSCAR data was obtained from the UNSW Zinc Anode Research Team, specifically provided through DFT calculations conducted by Ravindra Kokate.
