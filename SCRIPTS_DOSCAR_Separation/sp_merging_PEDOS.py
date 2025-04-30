@@ -61,9 +61,6 @@ if __name__ == "__main__":
 
     # Get the main directory path from the first command-line argument
     main_dir = sys.argv[1]
-
-    # main_dir = "/scratch/qq31/rk2062/Additives_properties_proj/200_bulk_adsor_cal/1st_set_molecules_30/1st_set_molecules_30_calculations/DOS_auto_calculations/"  # Update this path to your main directory containing DOS folders
-    # main_dir = "C:/Users/jespe/Desktop/[THESIS] Code/-ESPEJO-THESIS-DOS-ML-Model-/DOS_20241003"
     
     # Manually specify the column indices to sum (0-based index)
     column_indices = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # Replace these indices with the actual columns you want to sum

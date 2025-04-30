@@ -57,7 +57,7 @@ def perform_PCA(sample_data):
 
     return pca, scaled_data
 
-def transform_data_to_pc(dataset, molecule_names, scaled_data, min_energy, max_energy, cum_variance, n_pc):
+def transform_data_to_pc(results_dir, dataset, molecule_names, scaled_data, min_energy, max_energy, cum_variance, n_pc):
 
     pca = PCA(n_components=n_pc)
     transformed_data = pca.fit_transform(scaled_data)
@@ -75,7 +75,7 @@ def transform_data_to_pc(dataset, molecule_names, scaled_data, min_energy, max_e
     # Generate the filename
     filename = f'transformed_data_[{min_energy:.2f},{max_energy:.2f}]_var{cum_variance:.2f}.txt'
 
-    transformed_data_dir = os.path.join(os.getcwd(),f'transformed_data_{dataset}')
+    transformed_data_dir = os.path.join(results_dir,f'transformed_data_{dataset}')
 
     # Create the directory if it doesn't exist
     if not os.path.exists(transformed_data_dir):
@@ -83,6 +83,20 @@ def transform_data_to_pc(dataset, molecule_names, scaled_data, min_energy, max_e
 
     # Save the DataFrame to a text file
     pc_df.to_csv(os.path.join(transformed_data_dir, filename), sep='\t', index=False)
+
+    # Save to Excel (append if file already exists)
+    # Sheet name is based on energy range and variance for variation tracking
+    sheet_name = f'{min_energy:.2f},{max_energy:.2f}_var{cum_variance:.2f}'
+
+    excel_name = os.path.join(results_dir, f'{dataset}_transformed_data.xlsx')
+    if os.path.exists(excel_name):
+        # If Excel file does not exists, create a new Excel file
+        with pd.ExcelWriter(excel_name, mode="a", engine="openpyxl", if_sheet_exists="replace") as writer:
+            pc_df.to_excel(writer, sheet_name=sheet_name, index=False) 
+    else:
+        with pd.ExcelWriter(excel_name) as writer:
+            pc_df.to_excel(writer, sheet_name=sheet_name, index=False) 
+
 
 if __name__ == "__main__":
     # Check if the the directory path argument is provided
