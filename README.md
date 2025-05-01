@@ -14,6 +14,7 @@ The goal is to optimise electrolyte additives in zinc-ion batteries to prevent c
 ## Project Structure
 ```text
 ESPEJO-THESIS-DOS-ML-Model-/
+├── _RK Original files_            # Raw DOSCAR file data and parsing scripts from Ravindra Kokate
 ├── .venv                          # Python virtual environment
 ├── DOSCAR_Files/                  # Parsed DOSCARs ready for ML
 ├── DOSCAR_Files_Initial/          # Parsed DOSCARs of smaller dataset ready for ML
